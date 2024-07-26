@@ -1,54 +1,44 @@
-# Simple To-Do List Application
+def main():
+    tasks = []
 
-def display_menu():
-    print("\nTo-Do List Application")
-    print("1. Add Task")
-    print("2. View Tasks")
-    print("3. Delete Task")
-    print("4. Exit")
+    while True:
+        print("\n===== To-Do List =====")
+        print("1. Add Task")
+        print("2. Show Tasks")
+        print("3. Mark Task as Done")
+        print("4. Exit")
 
-def add_task(task_list):
-    task = input("Enter the task description: ")
-    task_list.append(task)
-    print("Task added.")
+        choice = input("Enter your choice: ")
 
-def view_tasks(task_list):
-    if not task_list:
-        print("No tasks available.")
-    else:
-        print("\nTasks:")
-        for i, task in enumerate(task_list, 1):
-            print(f"{i}. {task}")
+        if choice == '1':
+            print()
+            n_tasks = int(input("How may task you want to add: "))
+            
+            for i in range(n_tasks):
+                task = input("Enter the task: ")
+                tasks.append({"task": task, "done": False})
+                print("Task added!")
 
-def delete_task(task_list):
-    view_tasks(task_list)
-    if task_list:
-        try:
-            task_number = int(input("Enter the task number to delete: "))
-            if 1 <= task_number <= len(task_list):
-                removed_task = task_list.pop(task_number - 1)
-                print(f"Task '{removed_task}' deleted.")
+        elif choice == '2':
+            print("\nTasks:")
+            for index, task in enumerate(tasks):
+                status = "Done" if task["done"] else "Not Done"
+                print(f"{index + 1}. {task['task']} - {status}")
+
+        elif choice == '3':
+            task_index = int(input("Enter the task number to mark as done: ")) - 1
+            if 0 <= task_index < len(tasks):
+                tasks[task_index]["done"] = True
+                print("Task marked as done!")
             else:
                 print("Invalid task number.")
-        except ValueError:
-            print("Please enter a valid number.")
 
-def main():
-    task_list = []
-    while True:
-        display_menu()
-        choice = input("Enter your choice (1-4): ")
-        if choice == '1':
-            add_task(task_list)
-        elif choice == '2':
-            view_tasks(task_list)
-        elif choice == '3':
-            delete_task(task_list)
         elif choice == '4':
-            print("Exiting application. Goodbye!")
+            print("Exiting the To-Do List.")
             break
-        else:
-            print("Invalid choice. Please enter a number between 1 and 4.")
 
-if _name_ == "_main_":
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
     main()
